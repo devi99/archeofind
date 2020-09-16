@@ -118,20 +118,20 @@ class ImageFindSyncedListState extends State<ImageFindSyncedList>{
     }
   }
 
-  void _delete(BuildContext context, ImageFind img) async {
+  // void _delete(BuildContext context, ImageFind img) async {
 
-    int result = await databaseHelper.deleteImageFind(img.id);
-    if (result != 0) {
-      _showSnackBar(context, 'Deleted Successfully');
-       updateListView();
-    }
-  }
+  //   int result = await databaseHelper.deleteImageFind(img.id);
+  //   if (result != 0) {
+  //     _showSnackBar(context, 'Deleted Successfully');
+  //      updateListView();
+  //   }
+  // }
 
-  void _showSnackBar(BuildContext context, String message) {
+  // void _showSnackBar(BuildContext context, String message) {
 
-    final snackBar = SnackBar(content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
+  //   final snackBar = SnackBar(content: Text(message));
+  //   Scaffold.of(context).showSnackBar(snackBar);
+  // }
 
   void navigateToDetail(ImageFind img,String title) async{
    bool result= await Navigator.push(context, MaterialPageRoute(builder: (context){

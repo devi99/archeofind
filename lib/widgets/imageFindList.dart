@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:archeofind/models/imageFind.dart';
 import 'package:archeofind/services/database.dart';
 import 'package:flutter/material.dart';
@@ -144,20 +143,20 @@ class ImageFindListState extends State<ImageFindList>{
     }
   }
 
-  void _delete(BuildContext context, ImageFind img) async {
+  // void _delete(BuildContext context, ImageFind img) async {
 
-    int result = await databaseHelper.deleteImageFind(img.id);
-    if (result != 0) {
-      _showSnackBar(context, 'Deleted Successfully');
-       updateListView(widget.listToShow);
-    }
-  }
+  //   int result = await databaseHelper.deleteImageFind(img.id);
+  //   if (result != 0) {
+  //     _showSnackBar(context, 'Deleted Successfully');
+  //      updateListView(widget.listToShow);
+  //   }
+  // }
 
-  void _showSnackBar(BuildContext context, String message) {
+  // void _showSnackBar(BuildContext context, String message) {
 
-    final snackBar = SnackBar(content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
+  //   final snackBar = SnackBar(content: Text(message));
+  //   Scaffold.of(context).showSnackBar(snackBar);
+  // }
 
   void navigateToDetail(ImageFind img,String title) async{
    bool result= await Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -192,11 +191,14 @@ class ImageFindListState extends State<ImageFindList>{
   }
 
   Future<int> createEntry(ImageFind _imageFind) async {
+    var _fullFilename = _imageFind.name;
+    int lastSlash = _fullFilename.lastIndexOf('/')+1; 
+    var _shortFilename = _fullFilename.substring(lastSlash, _fullFilename.length); // 'art'
     String json = '''
       {
         "type":${_imageFind.type},
         "date":${_imageFind.date},
-        "name":"${_imageFind.name}",
+        "name":"$_shortFilename",
         "project":"${_imageFind.project}",
         "purpose":${_imageFind.purpose},
         "windDirection":"${_imageFind.windDirection}",
@@ -209,13 +211,13 @@ class ImageFindListState extends State<ImageFindList>{
         "vondst":"${_imageFind.vondst}"                                                
         }
       ''';
-      //'https://postman-echo.com/post',
+
     final http.Response response = await http.post(
       'http://demo.archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
-      body: jsonEncode(json),
+      body: json,
     );
 
     if (response.statusCode == 200) {
@@ -223,7 +225,20 @@ class ImageFindListState extends State<ImageFindList>{
       int result = await databaseHelper.updateImageFind(_imageFind);
       return (result);
     } else {
+      _showAlertDialog('Status', 'Something went wrong error ' + response.statusCode.toString());
       throw Exception('Failed to create album.');
     }
+  }
+
+  void _showAlertDialog(String title, String message) {
+
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    showDialog(
+        context: context,
+        builder: (_) => alertDialog
+    );
   }
 }

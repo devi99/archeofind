@@ -468,17 +468,29 @@ class ImageFindDetailState extends State<ImageFindDetail>{
   }
   void loadProject() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    projectController.text = prefs.getString('project');
+    String _project = prefs.getString('project');
+    if(_project != null){
+      projectController.text = prefs.getString('project');
+      _imageFind.project = prefs.getString('project');
+    }
   }
   
   void loadVlak() async {
     if(_imageFind.werkput == null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
+      String _werkput = prefs.getString('werkput');
+      if(_werkput != null){
       werkputController.text = prefs.getString('werkput');
+       _imageFind.werkput = prefs.getString('werkput');
+      }
     }
     if(_imageFind.vlak == null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      vlakController.text = prefs.getString('vlak');
+      String _vlak = prefs.getString('vlak');
+      if(_vlak != null){
+        vlakController.text = prefs.getString('vlak');
+        _imageFind.vlak = prefs.getString('vlak');
+      }      
     }
   }
 
