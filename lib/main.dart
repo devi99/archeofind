@@ -1,12 +1,31 @@
-import 'package:archeofind/widgets/defaultsDetail.dart';
-import 'package:archeofind/widgets/imageFindList.dart';
-import 'package:archeofind/widgets/navdrawer.dart';
+// import 'package:archeofind/widgets/defaultsDetail.dart';
+// import 'package:archeofind/widgets/imageFindList.dart';
+// import 'package:archeofind/widgets/navdrawer.dart';
 import 'package:flutter/material.dart';
+
+import 'presentation/tabs/pages/tabs_page.dart';
+//import 'widgets/imageFindSyncedList.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: TabsPage(),
+      debugShowCheckedModeBanner: true,
+    );
+  }
+}
+
+/* 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -21,7 +40,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'ArcheoFind Images'),
-        '/sync': (context) => ImageFindList(1),
+        '/sync': (context) => ImageFindSyncedList(),
         '/defaults': (context) => DefaultsDetail(),
       },
     );
@@ -94,3 +113,4 @@ class _MyHomePageState extends State<MyHomePage>
   }
   
 }
+ */

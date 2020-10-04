@@ -4,6 +4,8 @@ import 'package:archeofind/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:archeofind/services/database_imagefind_helpers.dart';
 import 'package:archeofind/widgets/imageFindDetail.dart';
+
+import 'navdrawer.dart';
 //import 'package:sqflite/sqflite.dart';
 
 class ImageFindSyncedList extends StatefulWidget{
@@ -29,8 +31,9 @@ class ImageFindSyncedListState extends State<ImageFindSyncedList>{
       updateListView();
     }
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text('Images'),
+        title: Text('Synced Images'),
       ),
       body: getImageListView(),
       floatingActionButton: FloatingActionButton(
