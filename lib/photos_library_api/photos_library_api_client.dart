@@ -32,6 +32,7 @@ import 'package:archeofind/photos_library_api/search_media_items_request.dart';
 import 'package:archeofind/photos_library_api/search_media_items_response.dart';
 import 'package:archeofind/photos_library_api/share_album_request.dart';
 import 'package:archeofind/photos_library_api/share_album_response.dart';
+import 'package:path/path.dart';
 //import 'package:path/path.dart' as path;
 
 class PhotosLibraryApiClient {
@@ -134,13 +135,28 @@ class PhotosLibraryApiClient {
   }
 
   Future<String> uploadMediaItem(File image) async {
-    // TODO(codelab): Implement this method.
-
     // Get the filename of the image
-
+    final String filename = basename(image.path);
     // Set up the headers required for this request.
-
+    final Map<String, String> headers = <String,String>{};
+    headers.addAll(await _authHeaders);
+    headers['Content-type'] = 'application/octet-stream';
+    headers['X-Goog-Upload-Protocol'] = 'raw';
+    headers['X-Goog-Upload-File-Name'] = filename;
     // Make the HTTP request to upload the image. The file is sent in the body.
+    return http
+        .post(
+      'https://photoslibrary.googleapis.com/v1/uploads',
+      body: image.readAsBytesSync(),
+      headers: await _authHeaders,
+    )
+        .then((Response response) {
+      if (response.statusCode != 200) {
+        print(response.reasonPhrase);
+        print(response.body);
+      }
+      return response.body;
+    });
   }
 
   Future<SearchMediaItemsResponse> searchMediaItems(
@@ -166,6 +182,7 @@ class PhotosLibraryApiClient {
   Future<BatchCreateMediaItemsResponse> batchCreateMediaItems(
       BatchCreateMediaItemsRequest request) async {
     print(request.toJson());
+    print(await _authHeaders);
     return http
         .post('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate',
             body: jsonEncode(request), headers: await _authHeaders)

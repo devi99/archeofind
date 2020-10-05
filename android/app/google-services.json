@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "611220017157",
+    "firebase_url": "https://myphotostorage-1586807026938.firebaseio.com",
+    "project_id": "myphotostorage-1586807026938",
+    "storage_bucket": "myphotostorage-1586807026938.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611220017157:android:ea4cd72930da2a010a0c6c",
+        "android_client_info": {
+          "package_name": "be.davyleemans.archeofind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611220017157-gklh256cltmpn8qd3g1gijs50tkfq4j5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.davyleemans.archeofind",
+            "certificate_hash": "68c95b7283d28ae8db10b5f88cc8355beaaadf70"
+          }
+        },
+        {
+          "client_id": "611220017157-8olaosptcpo79t5skq18n7gbatugl18b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAs1MtjQrYPCTOxkzyB46DtdC3osRWgBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611220017157-8olaosptcpo79t5skq18n7gbatugl18b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611220017157:android:14135a58b804ef990a0c6c",
+        "android_client_info": {
+          "package_name": "com.google.codelab.photos.sharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611220017157-n6u00uvl9qc4v81aaiumg6oj31m0olf7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.codelab.photos.sharing",
+            "certificate_hash": "68c95b7283d28ae8db10b5f88cc8355beaaadf70"
+          }
+        },
+        {
+          "client_id": "611220017157-8olaosptcpo79t5skq18n7gbatugl18b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAs1MtjQrYPCTOxkzyB46DtdC3osRWgBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611220017157-8olaosptcpo79t5skq18n7gbatugl18b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

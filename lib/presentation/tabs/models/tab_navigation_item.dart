@@ -1,4 +1,5 @@
 import 'package:archeofind/presentation/defaults/pages/defaultsDetail.dart';
+import 'package:archeofind/presentation/sync/pages/syncedImagesHome.dart';
 import 'package:archeofind/presentation/sync/pages/syncedImagesList.dart';
 import 'package:flutter/material.dart';
 import 'package:archeofind/presentation/home/pages/home_page.dart';
@@ -26,7 +27,7 @@ class TabNavigationItem {
           title: Text("Defaults"),
         ),
         TabNavigationItem(
-          page: SyncedImagesList(),
+          page: SyncedImagesHome(),
           icon: Icon(Icons.sync),
           title: Text("Sync"),
         ),

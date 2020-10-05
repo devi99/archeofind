@@ -17,6 +17,7 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:archeofind/photos_library_api/batch_create_media_items_request.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:archeofind/photos_library_api/album.dart';
@@ -143,14 +144,19 @@ class PhotosLibraryApiModel extends Model {
 
   Future<BatchCreateMediaItemsResponse> createMediaItem(
       String uploadToken, String albumId, String description) {
-    // TODO(codelab): Implement this method.
-
-    return null;
-
-    // Construct the request with the token, albumId and description.
+  // Construct the request with the token, albumId and description.
+    final BatchCreateMediaItemsRequest request =
+        BatchCreateMediaItemsRequest.inAlbum(uploadToken, albumId, description);
 
     // Make the API call to create the media item. The response contains a
     // media item.
+    return client
+        .batchCreateMediaItems(request)
+        .then((BatchCreateMediaItemsResponse response) {
+      // Print and return the response.
+      print(response.newMediaItemResults[0].toJson());
+      return response;
+    });
   }
 
   UnmodifiableListView<Album> get albums =>

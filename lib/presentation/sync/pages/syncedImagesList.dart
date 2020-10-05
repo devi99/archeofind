@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:archeofind/models/imageFind.dart';
+import 'package:archeofind/models/photos_library_api_model.dart';
+import 'package:archeofind/photos_library_api/batch_create_media_items_response.dart';
 import 'package:archeofind/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:archeofind/services/database_imagefind_helpers.dart';
 import 'package:archeofind/widgets/imageFindDetail.dart';
 import 'package:http/http.dart' as http;
+import 'package:scoped_model/scoped_model.dart';
 
 class SyncedImagesList extends StatefulWidget{
     static Route<dynamic> route() => MaterialPageRoute(
@@ -127,21 +131,6 @@ class SyncedImagesListState extends State<SyncedImagesList>{
     }
   }
 
-  // void _delete(BuildContext context, ImageFind img) async {
-
-  //   int result = await databaseHelper.deleteImageFind(img.id);
-  //   if (result != 0) {
-  //     _showSnackBar(context, 'Deleted Successfully');
-  //      updateListView(widget.listToShow);
-  //   }
-  // }
-
-  // void _showSnackBar(BuildContext context, String message) {
-
-  //   final snackBar = SnackBar(content: Text(message));
-  //   Scaffold.of(context).showSnackBar(snackBar);
-  // }
-
   void navigateToDetail(ImageFind img,String title) async{
    bool result= await Navigator.push(context, MaterialPageRoute(builder: (context){
       return ImageFindDetail(img,title);
@@ -165,11 +154,23 @@ class SyncedImagesListState extends State<SyncedImagesList>{
   
   void syncImages() {
     Future<List<ImageFind>> imgListFuture = databaseHelper.getImageFindList(0);
-    imgListFuture.then((imageFindlist) {
+    imgListFuture.then((imageFindlist) async {
       for (ImageFind imageFind in imageFindlist) {
         debugPrint(imageFind.id.toString());
-        Future<int>_futureAlbum = createEntry(imageFind);
-        debugPrint(_futureAlbum.toString());
+        final File image = File(imageFind.name);
+        debugPrint(imageFind.name);
+            // Make a request to upload the image to Google Photos once it was selected.
+        //final String uploadToken = 'CAIS+QIAqD4uLYuZP6HCdmPL6whnGJp6xAYZB8pyWM49078fpXJcYcH/NyKB/CVnhlR5SD4akh/I1XdRKDuFIvntlRJhJw53E1AlV4maJDkqjCJOyLJUAYyCUFXluu8+5aqVKuvm9EwMcaQAqAUpkZiaTSWBgsbv10imJlUaA3f4u4T6DaksETd/oaA4jxbfHJA5uaXITDkfhL0IZzkn7uW0QUZZtF3sEC2JdY4gdGyd8aFU1Wnwj4hNKAp3UpehNdZtI7BK+cU//oT2BJ0I+QFiAgenv/7pQIE8Fr/tN1EFarF291uau6GgifpSWzsJ7Tqtc6sn798PukidP16uvCrWDTGmiDVUR+90nIe+L8Rgb3YuZOuA5lNTbNokhk95EWewuov8V6pVvVKznCMfolCMz6CsF5G42CSfNdcLX+RqWt0t0O0c/0j0ZSz+SpluszpN13zXO1zvFK0dSxG9RtWlBtyGMg86I0EOkwC5IA9N6V2pkTk76y+xAsGbBw';
+        final String uploadToken =
+          await ScopedModel.of<PhotosLibraryApiModel>(context)
+            .uploadMediaItem(image);
+        debugPrint(uploadToken);
+        final BatchCreateMediaItemsResponse whatever =
+          await ScopedModel.of<PhotosLibraryApiModel>(context)
+            .createMediaItem(uploadToken, '', 'blablabla');
+        debugPrint(whatever.toString());
+        //Future<int>_futureAlbum = createEntry(imageFind);
+        //debugPrint(_futureAlbum.toString());
       }
     });
   }

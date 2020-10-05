@@ -1,13 +1,23 @@
 // import 'package:archeofind/widgets/defaultsDetail.dart';
 // import 'package:archeofind/widgets/imageFindList.dart';
 // import 'package:archeofind/widgets/navdrawer.dart';
+import 'package:archeofind/models/photos_library_api_model.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import 'presentation/tabs/pages/tabs_page.dart';
 //import 'widgets/imageFindSyncedList.dart';
 
 void main() {
-  runApp(MyApp());
+  //runApp(MyApp());
+    final apiModel = PhotosLibraryApiModel();
+    apiModel.signInSilently();
+    runApp(
+      ScopedModel<PhotosLibraryApiModel>(
+        model: apiModel,
+        child: MyApp(),
+      ),
+    );
 }
 
 class MyApp extends StatelessWidget {
