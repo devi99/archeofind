@@ -468,10 +468,10 @@ class ImageFindDetailState extends State<ImageFindDetail>{
   }
   void loadProject() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _project = prefs.getString('project');
+    String _project = prefs.getString('projectName');
     if(_project != null){
-      projectController.text = prefs.getString('project');
-      _imageFind.project = prefs.getString('project');
+      projectController.text = prefs.getString('projectName');
+      _imageFind.project = prefs.getString('projectId');
     }
   }
   

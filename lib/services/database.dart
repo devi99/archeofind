@@ -34,7 +34,8 @@ class DatabaseProvider{
           "coupe TEXT,"
           "profiel TEXT,"
           "structuur TEXT,"
-          "vondst TEXT"
+          "vondst TEXT,"
+          "gphotoId TEXT"
           ");");
         },
         onUpgrade: (Database db, int oldVersion, int newVersion) async {

@@ -33,7 +33,8 @@ class DatabaseImageFindHelper
           "coupe TEXT,"
           "profiel TEXT,"
           "structuur TEXT,"
-          "vondst TEXT"
+          "vondst TEXT,"
+          "gphotoId TEXT"
           ");"
         );
       var result = await db.query(currentTable, orderBy: 'id ASC');

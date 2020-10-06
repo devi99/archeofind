@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class DefaultsDetail extends StatefulWidget{
   
@@ -14,6 +17,25 @@ class DefaultsDetail extends StatefulWidget{
     
 class DefaultsDetailState extends State<DefaultsDetail>{
 
+  String _mySelectionId;
+  String _mySelectionName;
+
+  final String url = "https://demo.archeofinds.lares.eu.meteorapp.com/api/v1/list/projects";
+
+  List data = List(); //edited line
+
+  Future<String> getProjects() async {
+    var res = await http
+        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+    var resBody = json.decode(res.body);
+
+    setState(() {
+      data = resBody;
+    });
+
+    return "Success";
+  }
+
   TextEditingController projectController = TextEditingController();
   TextEditingController werkputController = TextEditingController();
   TextEditingController vlakController = TextEditingController();
@@ -23,6 +45,7 @@ class DefaultsDetailState extends State<DefaultsDetail>{
   @override
   void initState() {
     super.initState();
+    getProjects();
     loadDefaults();
   }
   
@@ -38,21 +61,26 @@ class DefaultsDetailState extends State<DefaultsDetail>{
           padding: EdgeInsets.only(top: 15.0,left: 10.0,right: 10.0),
           child: ListView(
             children: <Widget>[
+              
               Padding(
                 padding: EdgeInsets.only(top: 15.0,bottom: 15.0),
-                child: TextField(
-                  controller: projectController,
-                  style: textStyle,
-                  onChanged: (value){
+                child: new DropdownButton(
+                  items: data.map((item) {
+                    return new DropdownMenuItem(
+                      child: new Text(item['name']),
+                      value: item['_id'].toString(),
+                    );
+                  }).toList(),
+                  onChanged: (newVal) {
+                    setState(() {
+                      _mySelectionId = newVal;
+                      int valIndex = data.indexWhere((f) => f['_id'] == newVal);
+                      _mySelectionName = data[valIndex]["name"];
+                    });
                     updateDefault('project');
                   },
-                  decoration: InputDecoration(
-                    labelText: 'Project',
-                    labelStyle: textStyle,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0)
-                    )
-                  ),
+                  style: textStyle,
+                  value: _mySelectionId,
                 ),
               ),
 
@@ -142,7 +170,8 @@ class DefaultsDetailState extends State<DefaultsDetail>{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       werkputController.text = prefs.getString('werkput');
-      projectController.text = prefs.getString('project');
+      projectController.text = prefs.getString('projectId');
+      _mySelectionId = prefs.getString('projectId');
       vlakController.text = prefs.getString('vlak');
       spoorController.text = prefs.getString('spoor');
       coupeController.text = prefs.getString('coupe');
@@ -159,7 +188,8 @@ class DefaultsDetailState extends State<DefaultsDetail>{
         break;
       case 'project':
         setState(() {
-          prefs.setString('project', projectController.text);
+          prefs.setString('projectId', _mySelectionId);
+          prefs.setString('projectName', _mySelectionName);
         });
         break;
       case 'vlak':

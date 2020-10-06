@@ -1,6 +1,6 @@
 class ImageFind{
   int _id, _type, _date, _purpose, _uploaded;
-  String _name, _project, _windDirection, _werkput, _vlak, _spoor, _coupe, _profiel, _structuur, _vondst; 
+  String _name, _project, _windDirection, _werkput, _vlak, _spoor, _coupe, _profiel, _structuur, _vondst, _gphotoId; 
  
   ImageFind();
 
@@ -20,6 +20,7 @@ class ImageFind{
   String get profiel => _profiel;
   String get structuur => _structuur;
   String get vondst => _vondst;
+  String get gphotoId => _gphotoId;
 
   //Setters
   set project(String newProject) {
@@ -72,6 +73,11 @@ class ImageFind{
       this._vondst = newVondst;
     }
   }  
+  set gphotoId(String newGphotoId) {
+    if (newGphotoId.length <= 255) {
+      this._gphotoId = newGphotoId;
+    }
+  }  
 
   set type(int newType) {
       this._type = newType;
@@ -108,6 +114,7 @@ class ImageFind{
     map['profiel'] = _profiel;
     map['structuur'] =_structuur;
     map['vondst'] = _vondst;
+    map['gphotoId'] = _gphotoId;
 
     return map;
   }
@@ -128,6 +135,7 @@ class ImageFind{
     this._coupe = map['coupe'];
     this._profiel = map['profiel'];
     this._vondst = map['vondst'];
+    this._gphotoId = map['gphotoId'];
   }
 
 }

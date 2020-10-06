@@ -36,6 +36,7 @@ class SyncedImagesListState extends State<SyncedImagesList>{
       imageFindlist=List<ImageFind>();
       updateListView(1);
     }
+    //updateListView(1);
     return Scaffold(
       appBar: AppBar(
         title: Text('SYNC'),
@@ -165,25 +166,26 @@ class SyncedImagesListState extends State<SyncedImagesList>{
           await ScopedModel.of<PhotosLibraryApiModel>(context)
             .uploadMediaItem(image);
         debugPrint(uploadToken);
-        final BatchCreateMediaItemsResponse whatever =
+        final BatchCreateMediaItemsResponse uploadedItem =
           await ScopedModel.of<PhotosLibraryApiModel>(context)
-            .createMediaItem(uploadToken, '', 'blablabla');
-        debugPrint(whatever.toString());
-        //Future<int>_futureAlbum = createEntry(imageFind);
-        //debugPrint(_futureAlbum.toString());
+            .createMediaItem(uploadToken, '', '');
+        debugPrint(uploadedItem.toString());
+        imageFind.gphotoId = uploadedItem.newMediaItemResults[0].mediaItem.id;
+        Future<int>_futureAlbum = createEntry(imageFind);
+        debugPrint(_futureAlbum.toString());
       }
     });
   }
 
   Future<int> createEntry(ImageFind _imageFind) async {
-    var _fullFilename = _imageFind.name;
-    int lastSlash = _fullFilename.lastIndexOf('/')+1; 
-    var _shortFilename = _fullFilename.substring(lastSlash, _fullFilename.length); // 'art'
+    // var _fullFilename = _imageFind.name;
+    // int lastSlash = _fullFilename.lastIndexOf('/')+1; 
+    // var _shortFilename = _fullFilename.substring(lastSlash, _fullFilename.length); // 'art'
     String json = '''
       {
         "type":${_imageFind.type},
         "date":${_imageFind.date},
-        "name":"$_shortFilename",
+        "name":"${_imageFind.gphotoId}",
         "project":"${_imageFind.project}",
         "purpose":${_imageFind.purpose},
         "windDirection":"${_imageFind.windDirection}",
@@ -196,7 +198,7 @@ class SyncedImagesListState extends State<SyncedImagesList>{
         "vondst":"${_imageFind.vondst}"                                                
         }
       ''';
-
+    debugPrint(json.toString());
     final http.Response response = await http.post(
       'http://demo.archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
       headers: <String, String>{
