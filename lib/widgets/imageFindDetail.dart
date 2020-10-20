@@ -476,8 +476,8 @@ class ImageFindDetailState extends State<ImageFindDetail>{
   }
   
   void loadVlak() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if(_imageFind.werkput == null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       String _werkput = prefs.getString('werkput');
       if(_werkput != null){
       werkputController.text = prefs.getString('werkput');
@@ -485,7 +485,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
       }
     }
     if(_imageFind.vlak == null){
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //SharedPreferences prefs = await SharedPreferences.getInstance();
       String _vlak = prefs.getString('vlak');
       if(_vlak != null){
         vlakController.text = prefs.getString('vlak');
@@ -499,6 +499,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
     if(_imageFind.spoor == null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
       spoorController.text = prefs.getString('spoor');
+      _imageFind.spoor = prefs.getString('spoor');
     }
   }
     
@@ -842,7 +843,8 @@ class ImageFindDetailState extends State<ImageFindDetail>{
   
     setState(() {
       _imageFind.name = result[1];
-      _imageFind.date = result[0].millisecondsSinceEpoch;
+      int _unixDateTime = result[0].millisecondsSinceEpoch;
+      _imageFind.date = _unixDateTime ~/ 1000;
       _save();      
     });
   

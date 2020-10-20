@@ -32,10 +32,11 @@ class HomePageState extends State<HomePage>{
 
     @override
     Widget build(BuildContext context) {
-      if(imageFindlist==null){
-        imageFindlist=List<ImageFind>();
-        updateListView(0);
-      }
+      // if(imageFindlist==null){
+      //   imageFindlist=List<ImageFind>();
+      //   updateListView(0);
+      // }
+      updateListView(0);
       return Scaffold(
           appBar: AppBar(
             title: Text('New Images'),

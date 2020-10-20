@@ -66,6 +66,18 @@ class LoginPage extends StatelessWidget {
                 }
               },
             ),
+            RaisedButton(
+              padding: const EdgeInsets.all(15),
+              child: const Text('DisConnect From Google Photos'),
+              onPressed: () async {
+                try {
+                  await apiModel.signOut();
+                } on Exception catch (error) {
+                  print(error);
+                  _showSignInError(context);
+                }
+              },
+            ),            
           ],
         );
       },

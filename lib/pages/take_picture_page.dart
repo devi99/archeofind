@@ -37,12 +37,12 @@ class _TakePicturePageState extends State<TakePicturePage> {
           join((await getTemporaryDirectory()).path, fileName);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final _albumName = prefs.getString('project') ?? 'archeoFind';
+      //final _albumName = prefs.getString('project') ?? 'archeoFind';
 
       await _cameraController.takePicture(path);
-      GallerySaver.saveImage(path, albumName: _albumName)
-          .then((bool success) {
-          });
+      // GallerySaver.saveImage(path, albumName: _albumName)
+      //     .then((bool success) {
+      //     });
       var arr = [dateNow, path];
       Navigator.pop(context,arr);
 
