@@ -13,27 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:archeofind/photos_library_api/batch_create_media_items_request.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:archeofind/photos_library_api/album.dart';
-//import 'package:archeofind/photos_library_api/batch_create_media_items_request.dart';
 import 'package:archeofind/photos_library_api/batch_create_media_items_response.dart';
-//import 'package:archeofind/photos_library_api/create_album_request.dart';
-import 'package:archeofind/photos_library_api/join_shared_album_request.dart';
-import 'package:archeofind/photos_library_api/get_album_request.dart';
-import 'package:archeofind/photos_library_api/join_shared_album_response.dart';
-import 'package:archeofind/photos_library_api/list_albums_response.dart';
-import 'package:archeofind/photos_library_api/list_shared_albums_response.dart';
 import 'package:archeofind/photos_library_api/photos_library_api_client.dart';
-import 'package:archeofind/photos_library_api/search_media_items_request.dart';
-import 'package:archeofind/photos_library_api/search_media_items_response.dart';
-import 'package:archeofind/photos_library_api/share_album_request.dart';
-import 'package:archeofind/photos_library_api/share_album_response.dart';
 
 class PhotosLibraryApiModel extends Model {
   PhotosLibraryApiModel() {
@@ -47,15 +33,11 @@ class PhotosLibraryApiModel extends Model {
         // Reset the client
         client = null;
       }
-      // Reinitialize the albums
-      updateAlbums();
 
       notifyListeners();
     });
   }
 
-  final LinkedHashSet<Album> _albums = LinkedHashSet<Album>();
-  bool hasAlbums = false;
   PhotosLibraryApiClient client;
 
   GoogleSignInAccount _currentUser;
@@ -98,46 +80,6 @@ class PhotosLibraryApiModel extends Model {
     print('User signed in silently.');
   }
 
-  Future<Album> createAlbum(String title) async {
-    // TODO(codelab): Implement this call.
-
-    return null;
-  }
-
-  Future<Album> getAlbum(String id) async {
-    return client
-        .getAlbum(GetAlbumRequest.defaultOptions(id))
-        .then((Album album) {
-      return album;
-    });
-  }
-
-  Future<JoinSharedAlbumResponse> joinSharedAlbum(String shareToken) {
-    return client
-        .joinSharedAlbum(JoinSharedAlbumRequest(shareToken))
-        .then((JoinSharedAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
-  }
-
-  Future<ShareAlbumResponse> shareAlbum(String id) async {
-    return client
-        .shareAlbum(ShareAlbumRequest.defaultOptions(id))
-        .then((ShareAlbumResponse response) {
-      updateAlbums();
-      return response;
-    });
-  }
-
-  Future<SearchMediaItemsResponse> searchMediaItems(String albumId) async {
-    return client
-        .searchMediaItems(SearchMediaItemsRequest.albumId(albumId))
-        .then((SearchMediaItemsResponse response) {
-      return response;
-    });
-  }
-
   Future<String> uploadMediaItem(File image) {
     return client.uploadMediaItem(image);
   }
@@ -159,56 +101,4 @@ class PhotosLibraryApiModel extends Model {
     });
   }
 
-  UnmodifiableListView<Album> get albums =>
-      UnmodifiableListView<Album>(_albums ?? <Album>[]);
-
-  void updateAlbums() async {
-    // Reset the flag before loading new albums
-    hasAlbums = false;
-
-    // Clear all albums
-    _albums.clear();
-
-    // Skip if not signed in
-    if (!isLoggedIn()) {
-      return;
-    }
-
-    // Add albums from the user's Google Photos account
-     var ownedAlbums = await _loadAlbums();
-     if (ownedAlbums != null) {
-       _albums.addAll(ownedAlbums);
-     }
-
-    /*
-    // Load albums from owned and shared albums
-    final List<List<Album>> list =
-    await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
-
-    _albums.addAll(list.expand((a) => a ?? []));
-    */
-
-    notifyListeners();
-    hasAlbums = true;
-  }
-
-  /// Load Albums into the model by retrieving the list of all albums shared
-  /// with the user.
-  // Future<List<Album>> _loadSharedAlbums() {
-  //   return client.listSharedAlbums().then(
-  //     (ListSharedAlbumsResponse response) {
-  //       return response.sharedAlbums;
-  //     },
-  //   );
-  // }
-
-  /// Load albums into the model by retrieving the list of all albums owned
-  /// by the user.
-  Future<List<Album>> _loadAlbums() {
-    return client.listAlbums().then(
-      (ListAlbumsResponse response) {
-        return response.albums;
-      },
-    );
-  }
 }

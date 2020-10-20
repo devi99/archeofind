@@ -3,7 +3,6 @@ import 'package:archeofind/models/imageFind.dart';
 import 'package:archeofind/models/photos_library_api_model.dart';
 import 'package:archeofind/photos_library_api/batch_create_media_items_response.dart';
 import 'package:archeofind/services/database.dart';
-import 'package:archeofind/widgets/speedDial.dart';
 import 'package:flutter/material.dart';
 import 'package:archeofind/services/database_imagefind_helpers.dart';
 import 'package:archeofind/widgets/imageFindDetail.dart';
@@ -197,7 +196,6 @@ class SyncedImagesListState extends State<SyncedImagesList>
     _shouldHaveElevation = !_shouldHaveElevation;
   }
 
-
   void syncImages(BuildContext context) {
     setState(() {
       isLoading = true;
@@ -350,11 +348,6 @@ class SyncedImagesListState extends State<SyncedImagesList>
       },
     );
   }
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
 
   Widget syncButton() {
     return Container(
@@ -398,6 +391,13 @@ class SyncedImagesListState extends State<SyncedImagesList>
     );
   }
 
+  
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // if(imageFindlist==null){
@@ -434,80 +434,4 @@ class SyncedImagesListState extends State<SyncedImagesList>
       )
     );
   }
-
-  // void syncImages() {
-  //   Future<List<ImageFind>> imgListFuture = databaseHelper.getImageFindList(0);
-  //   imgListFuture.then((imageFindlist) async {
-  //     for (ImageFind imageFind in imageFindlist) {
-  //       debugPrint(imageFind.id.toString());
-  //       final File image = File(imageFind.name);
-  //       debugPrint(imageFind.name);
-  //           // Make a request to upload the image to Google Photos once it was selected.
-  //       final String uploadToken =
-  //         await ScopedModel.of<PhotosLibraryApiModel>(context)
-  //           .uploadMediaItem(image);
-  //       debugPrint(uploadToken);
-  //       final BatchCreateMediaItemsResponse uploadedItem =
-  //         await ScopedModel.of<PhotosLibraryApiModel>(context)
-  //           .createMediaItem(uploadToken, '', '');
-  //       debugPrint(uploadedItem.toString());
-  //       imageFind.gphotoId = uploadedItem.newMediaItemResults[0].mediaItem.id;
-  //       Future<int>_futureAlbum = createEntry(imageFind);
-  //       debugPrint(_futureAlbum.toString());
-  //     }
-  //   });
-  // }
-
-  // Future<int> createEntry(ImageFind _imageFind) async {
-  //   // var _fullFilename = _imageFind.name;
-  //   // int lastSlash = _fullFilename.lastIndexOf('/')+1; 
-  //   // var _shortFilename = _fullFilename.substring(lastSlash, _fullFilename.length); // 'art'
-  //   String json = '''
-  //     {
-  //       "type":${_imageFind.type},
-  //       "date":${_imageFind.date},
-  //       "name":"${_imageFind.gphotoId}",
-  //       "project":"${_imageFind.project}",
-  //       "purpose":${_imageFind.purpose},
-  //       "windDirection":"${_imageFind.windDirection}",
-  //       "werkput":"${_imageFind.werkput}",
-  //       "vlak":"${_imageFind.vlak}",
-  //       "spoor":"${_imageFind.spoor}",
-  //       "coupe":"${_imageFind.coupe}",
-  //       "profiel":"${_imageFind.profiel}",  
-  //       "structuur":"${_imageFind.structuur}",
-  //       "vondst":"${_imageFind.vondst}"                                                
-  //       }
-  //     ''';
-  //   debugPrint(json.toString());
-  //   final http.Response response = await http.post(
-  //     'http://demo.archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: json,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     _imageFind.uploaded = 1;
-  //     int result = await databaseHelper.updateImageFind(_imageFind);
-  //     return (result);
-  //   } else {
-  //     _showAlertDialog('Status', 'Something went wrong error ' + response.statusCode.toString());
-  //     throw Exception('Failed to create album.');
-  //   }
-  // }
-
-  // void _showAlertDialog(String title, String message) {
-
-  //   AlertDialog alertDialog = AlertDialog(
-  //     title: Text(title),
-  //     content: Text(message),
-  //   );
-  //   showDialog(
-  //       context: context,
-  //       builder: (_) => alertDialog
-  //   );
-  // }
-
 }

@@ -18,20 +18,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:archeofind/photos_library_api/album.dart';
 import 'package:http/http.dart' as http;
 import 'package:archeofind/photos_library_api/batch_create_media_items_request.dart';
 import 'package:archeofind/photos_library_api/batch_create_media_items_response.dart';
-import 'package:archeofind/photos_library_api/create_album_request.dart';
-import 'package:archeofind/photos_library_api/get_album_request.dart';
-import 'package:archeofind/photos_library_api/join_shared_album_request.dart';
-import 'package:archeofind/photos_library_api/join_shared_album_response.dart';
-import 'package:archeofind/photos_library_api/list_albums_response.dart';
-import 'package:archeofind/photos_library_api/list_shared_albums_response.dart';
-import 'package:archeofind/photos_library_api/search_media_items_request.dart';
-import 'package:archeofind/photos_library_api/search_media_items_response.dart';
-import 'package:archeofind/photos_library_api/share_album_request.dart';
-import 'package:archeofind/photos_library_api/share_album_response.dart';
 import 'package:path/path.dart';
 //import 'package:path/path.dart' as path;
 
@@ -39,100 +28,6 @@ class PhotosLibraryApiClient {
   PhotosLibraryApiClient(this._authHeaders);
 
   Future<Map<String, String>> _authHeaders;
-
-  Future<Album> createAlbum(CreateAlbumRequest request) async {
-    // TODO(codelab): Implement this call.
-    return null;
-  }
-
-  Future<JoinSharedAlbumResponse> joinSharedAlbum(
-      JoinSharedAlbumRequest request) async {
-    return http
-        .post('https://photoslibrary.googleapis.com/v1/sharedAlbums:join',
-            headers: await _authHeaders, body: jsonEncode(request))
-        .then((Response response) {
-      if (response.statusCode != 200) {
-        print(response.reasonPhrase);
-        print(response.body);
-      }
-
-      return JoinSharedAlbumResponse.fromJson(jsonDecode(response.body));
-    });
-  }
-
-  Future<ShareAlbumResponse> shareAlbum(ShareAlbumRequest request) async {
-    return http
-        .post(
-            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}:share',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        return ShareAlbumResponse.fromJson(jsonDecode(response.body));
-      },
-    );
-  }
-
-  Future<Album> getAlbum(GetAlbumRequest request) async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/albums/${request.albumId}',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        return Album.fromJson(jsonDecode(response.body));
-      },
-    );
-  }
-
-  Future<ListAlbumsResponse> listAlbums() async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/albums?'
-            'pageSize=50',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        print(response.body);
-
-        return ListAlbumsResponse.fromJson(jsonDecode(response.body));
-      },
-    );
-  }
-
-  Future<ListSharedAlbumsResponse> listSharedAlbums() async {
-    return http
-        .get(
-            'https://photoslibrary.googleapis.com/v1/sharedAlbums?'
-            'pageSize=50&excludeNonAppCreatedData=true',
-            headers: await _authHeaders)
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        print(response.body);
-
-        return ListSharedAlbumsResponse.fromJson(jsonDecode(response.body));
-      },
-    );
-  }
 
   Future<String> uploadMediaItem(File image) async {
     // Get the filename of the image
@@ -157,26 +52,6 @@ class PhotosLibraryApiClient {
       }
       return response.body;
     });
-  }
-
-  Future<SearchMediaItemsResponse> searchMediaItems(
-      SearchMediaItemsRequest request) async {
-    return http
-        .post(
-      'https://photoslibrary.googleapis.com/v1/mediaItems:search',
-      body: jsonEncode(request),
-      headers: await _authHeaders,
-    )
-        .then(
-      (Response response) {
-        if (response.statusCode != 200) {
-          print(response.reasonPhrase);
-          print(response.body);
-        }
-
-        return SearchMediaItemsResponse.fromJson(jsonDecode(response.body));
-      },
-    );
   }
 
   Future<BatchCreateMediaItemsResponse> batchCreateMediaItems(

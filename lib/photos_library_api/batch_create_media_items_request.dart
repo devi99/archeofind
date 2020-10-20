@@ -85,6 +85,7 @@ class AlbumPosition {
   String relativeEnrichmentItemId;
   PositionType position;
 
+  // ignore: missing_return
   static AlbumPosition lastInAlbum() {}
 }
 

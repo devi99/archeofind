@@ -16,7 +16,6 @@
 
 import 'package:archeofind/models/photos_library_api_model.dart';
 import 'package:archeofind/presentation/sync/pages/syncedImagesHome.dart';
-import 'package:archeofind/presentation/sync/pages/syncedImagesList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -93,12 +92,4 @@ class LoginPage extends StatelessWidget {
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
-  void _navigateToTripList(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) => SyncedImagesHome(),
-      ),
-    );
-  }
 }
