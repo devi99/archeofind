@@ -75,3 +75,6 @@ upload C:\dev\archeofind\build\app\outputs\bundle\release to
 probleem camera package
 In build.gradle
 minSdkVersion 21  ipv 16
+
+Produktie
+SHA-1 fingerprint uit play console halen en in firebase project steken

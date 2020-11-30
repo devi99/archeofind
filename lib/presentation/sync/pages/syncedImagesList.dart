@@ -274,7 +274,7 @@ class SyncedImagesListState extends State<SyncedImagesList>
       ''';
     debugPrint(json.toString());
     final http.Response response = await http.post(
-      'http://demo.archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
+      'https://archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

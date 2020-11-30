@@ -20,7 +20,7 @@ class DefaultsDetailState extends State<DefaultsDetail>{
   String _mySelectionId;
   String _mySelectionName;
 
-  final String url = "https://demo.archeofinds.lares.eu.meteorapp.com/api/v1/list/projects";
+  final String url = "https://archeofinds.lares.eu.meteorapp.com/api/v1/list/projects";
 
   List data = List(); //edited line
 
