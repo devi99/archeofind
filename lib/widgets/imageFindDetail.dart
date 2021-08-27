@@ -823,10 +823,16 @@ class ImageFindDetailState extends State<ImageFindDetail>{
     final pickedFile = await _picker.getImage(
       source: ImageSource.gallery
     );
+    final File _file = File(pickedFile.path); 
+    
+    _file.lastModified().then((value) {
+      int _unixDateTime = value.millisecondsSinceEpoch;      
+      setState(() {
+        _imageFind.name = pickedFile.path;   
+        _imageFind.date = _unixDateTime ~/ 1000;   
+        _save();     
+      });
 
-    setState(() {
-      _imageFind.name = pickedFile.path;      
-      _save();     
     });
 
   }
