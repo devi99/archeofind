@@ -25,7 +25,7 @@ class _TabsPageState extends State<TabsPage> {
           for (final tabItem in TabNavigationItem.items)
             BottomNavigationBarItem(
               icon: tabItem.icon,
-              title: tabItem.title,
+              label: tabItem.title,
             ),
         ],
       ),

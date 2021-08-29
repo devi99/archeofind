@@ -274,7 +274,7 @@ class SyncedImagesListState extends State<SyncedImagesList>
       ''';
     debugPrint(json.toString());
     final http.Response response = await http.post(
-      'https://archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
+      Uri.parse('https://archeofinds.lares.eu.meteorapp.com/api/v1/import/photo'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -306,7 +306,7 @@ class SyncedImagesListState extends State<SyncedImagesList>
   void _showSnackBar(BuildContext context, String message) {
 
     final snackBar = SnackBar(content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showConfirmationDialog(BuildContext context, String targetFunction) {

@@ -187,7 +187,7 @@ class HomePageState extends State<HomePage>{
         ''';
 
       final http.Response response = await http.post(
-        'https://archeofinds.lares.eu.meteorapp.com/api/v1/import/photo',
+        Uri.parse('https://archeofinds.lares.eu.meteorapp.com/api/v1/import/photo'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

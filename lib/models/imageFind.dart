@@ -134,6 +134,7 @@ class ImageFind{
     this._spoor = map['spoor'];
     this._coupe = map['coupe'];
     this._profiel = map['profiel'];
+    this._structuur = map['structuur'];
     this._vondst = map['vondst'];
     this._gphotoId = map['gphotoId'];
   }

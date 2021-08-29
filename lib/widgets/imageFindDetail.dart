@@ -172,7 +172,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
                     style: textStyle,
                     onChanged: (value){
                       debugPrint('Something changed in purpose text field');
-                      updateController('project');
+                      //updateController('project');
                     },
                     decoration: InputDecoration(
                       labelText: 'Project',
@@ -418,9 +418,9 @@ class ImageFindDetailState extends State<ImageFindDetail>{
                 child: Row(
                   children: <Widget>[
                   Expanded(
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColorDark,
-                      textColor: Theme.of(context).primaryColorLight,
+                    child: ElevatedButton(
+                      //color: Theme.of(context).primaryColorDark,
+                      //textColor: Theme.of(context).primaryColorLight,
                       child: Text(
                         'Save',
                         textScaleFactor: 1.5,
@@ -437,9 +437,9 @@ class ImageFindDetailState extends State<ImageFindDetail>{
                   Container(width: 5.0,),
                   //delete button
                   Expanded(
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColorDark,
-                      textColor: Theme.of(context).primaryColorLight,
+                    child: ElevatedButton(
+                      //color: Theme.of(context).primaryColorDark,
+                      //textColor: Theme.of(context).primaryColorLight,
                       child: Text(
                         'delete',
                         textScaleFactor: 1.5,
@@ -501,6 +501,11 @@ class ImageFindDetailState extends State<ImageFindDetail>{
       spoorController.text = prefs.getString('spoor');
       _imageFind.spoor = prefs.getString('spoor');
     }
+    if(_imageFind.coupe == null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      coupeController.text = prefs.getString('coupe');
+      _imageFind.coupe = prefs.getString('coupe');
+    }    
   }
     
 // Convert int priority to String priority and display it to user in DropDown
@@ -690,7 +695,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
           _isVisibleStructuur = false;
           _isVisibleVondst = false;           
         });   
-        loadVlak();
+        loadSpoor();
         break;
       case 6:
         setState(() {
@@ -732,7 +737,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
           _isVisibleStructuur = false;
           _isVisibleVondst = true;           
         });       
-        loadVlak();        
+        loadSpoor();        
         break;                  
     }
   }
@@ -820,7 +825,7 @@ class ImageFindDetailState extends State<ImageFindDetail>{
   void _showPhotoLibrary() async {
 
     final ImagePicker _picker = ImagePicker();
-    final pickedFile = await _picker.getImage(
+    final pickedFile = await _picker.pickImage(
       source: ImageSource.gallery
     );
     final File _file = File(pickedFile.path); 

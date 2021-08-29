@@ -41,7 +41,7 @@ class PhotosLibraryApiClient {
     // Make the HTTP request to upload the image. The file is sent in the body.
     return http
         .post(
-      'https://photoslibrary.googleapis.com/v1/uploads',
+      Uri.parse('https://photoslibrary.googleapis.com/v1/uploads'),
       body: image.readAsBytesSync(),
       headers: await _authHeaders,
     )
@@ -59,7 +59,8 @@ class PhotosLibraryApiClient {
     print(request.toJson());
     print(await _authHeaders);
     return http
-        .post('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate',
+        .post(
+            Uri.parse('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate'),
             body: jsonEncode(request), headers: await _authHeaders)
         .then((Response response) {
       if (response.statusCode != 200) {

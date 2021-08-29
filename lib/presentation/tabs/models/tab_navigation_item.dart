@@ -5,7 +5,7 @@ import 'package:archeofind/presentation/home/pages/home_page.dart';
 
 class TabNavigationItem {
   final Widget page;
-  final Widget title;
+  final String title;
   final Icon icon;
 
   TabNavigationItem({
@@ -18,17 +18,17 @@ class TabNavigationItem {
         TabNavigationItem(
           page: HomePage(),
           icon: Icon(Icons.home),
-          title: Text("Home"),
+          title: "Home",
         ),
         TabNavigationItem(
           page: DefaultsDetail(),
           icon: Icon(Icons.text_fields),
-          title: Text("Defaults"),
+          title: "Defaults",
         ),
         TabNavigationItem(
           page: SyncedImagesHome(),
           icon: Icon(Icons.sync),
-          title: Text("Sync"),
+          title: "Sync",
         ),
       ];
 }

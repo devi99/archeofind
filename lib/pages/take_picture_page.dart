@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -32,16 +34,16 @@ class _TakePicturePageState extends State<TakePicturePage> {
       final dateNow = DateTime.now();
       final fileName = '$_prefix$dateNow.jpg';
       final path =
-          join((await getTemporaryDirectory()).path, fileName);
-
+          join((await getExternalStorageDirectory()).path, fileName);
       //SharedPreferences prefs = await SharedPreferences.getInstance();
       //final _albumName = prefs.getString('project') ?? 'archeoFind';
 
-      await _cameraController.takePicture(path);
+      XFile image = await _cameraController.takePicture();
       // GallerySaver.saveImage(path, albumName: _albumName)
       //     .then((bool success) {
       //     });
-      var arr = [dateNow, path];
+      image.saveTo(path);
+      var arr = [dateNow, image.path];
       Navigator.pop(context,arr);
 
     } catch (e) {

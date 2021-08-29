@@ -83,7 +83,7 @@ class DatabaseImageFindHelper
     var imageFindMapList = await getImageFindMapList(source); // Get 'Map List' from database
     int count = imageFindMapList.length;         // Count the number of map entries in db table
 
-    List<ImageFind> imageFindList = List<ImageFind>();
+    List<ImageFind> imageFindList = [];
     // For loop to create a 'ImageFind List' from a 'Map List'
     for (int i = 0; i < count; i++) {
       imageFindList.add(ImageFind.fromMapObject(imageFindMapList[i]));

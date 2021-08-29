@@ -51,8 +51,8 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: Color(0x99000000)),
               ),
             ),
-            RaisedButton(
-              padding: const EdgeInsets.all(15),
+            ElevatedButton(
+              //padding: const EdgeInsets.all(15),
               child: const Text('Connect with Google Photos'),
               onPressed: () async {
                 try {
@@ -65,8 +65,8 @@ class LoginPage extends StatelessWidget {
                 }
               },
             ),
-            RaisedButton(
-              padding: const EdgeInsets.all(15),
+            ElevatedButton(
+              //padding: const EdgeInsets.all(15),
               child: const Text('DisConnect From Google Photos'),
               onPressed: () async {
                 try {
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
       content: const Text('Could not sign in.\n'
           'Is the Google Services file missing?'),
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
 }

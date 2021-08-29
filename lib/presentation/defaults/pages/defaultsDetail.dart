@@ -22,11 +22,11 @@ class DefaultsDetailState extends State<DefaultsDetail>{
 
   final String url = "https://archeofinds.lares.eu.meteorapp.com/api/v1/list/projects";
 
-  List data = List(); //edited line
+  List<dynamic> data = []; //edited line
 
   Future<String> getProjects() async {
     var res = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+        .get(Uri.parse(url), headers: {"Accept": "application/json"});
     var resBody = json.decode(res.body);
 
     setState(() {
