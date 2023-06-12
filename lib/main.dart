@@ -5,7 +5,7 @@ import 'presentation/tabs/pages/tabs_page.dart';
 
 void main() {
     final apiModel = PhotosLibraryApiModel();
-    apiModel.signInSilently();
+    //apiModel.signInSilently();
     runApp(
       ScopedModel<PhotosLibraryApiModel>(
         model: apiModel,
